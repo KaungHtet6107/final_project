@@ -1,0 +1,65 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red157\green0\blue210;\red255\green255\blue255;\red0\green0\blue0;
+\red0\green0\blue109;\red101\green76\blue29;\red144\green1\blue18;\red0\green0\blue255;\red15\green112\blue1;
+\red19\green118\blue70;}
+{\*\expandedcolortbl;;\cssrgb\c68627\c0\c85882;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c6275\c50196;\cssrgb\c47451\c36863\c14902;\cssrgb\c63922\c8235\c8235;\cssrgb\c0\c0\c100000;\cssrgb\c0\c50196\c0;
+\cssrgb\c3529\c52549\c34510;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 from\cf0 \strokec4  flask \cf2 \strokec2 import\cf0 \strokec4  Flask, render_template, request\cb1 \
+\cf2 \cb3 \strokec2 from\cf0 \strokec4  EmotionDetection \cf2 \strokec2 import\cf0 \strokec4  emotion_detector\cb1 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 app = Flask(\cf5 \strokec5 __name__\cf0 \strokec4 )\cb1 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf6 \cb3 \strokec6 @app.route\cf0 \strokec4 (\cf7 \strokec7 "/"\cf0 \strokec4 )\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 \strokec8 def\cf0 \strokec4  \cf6 \strokec6 render_index_page\cf0 \strokec4 ():\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3     \cf2 \strokec2 return\cf0 \strokec4  render_template(\cf7 \strokec7 "index.html"\cf0 \strokec4 )\cb1 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf6 \cb3 \strokec6 @app.route\cf0 \strokec4 (\cf7 \strokec7 "/emotionDetector"\cf0 \strokec4 )\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 \strokec8 def\cf0 \strokec4  \cf6 \strokec6 emotion_detector_route\cf0 \strokec4 ():\cb1 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3     text_to_analyze = request.args.get(\cf7 \strokec7 "textToAnalyze"\cf0 \strokec4 )\cb1 \
+\
+\cb3     response = emotion_detector(text_to_analyze)\cb1 \
+\
+\cb3     \cf9 \strokec9 # Handle blank/invalid input\cf0 \cb1 \strokec4 \
+\cb3     \cf2 \strokec2 if\cf0 \strokec4  response[\cf7 \strokec7 "dominant_emotion"\cf0 \strokec4 ] \cf8 \strokec8 is\cf0 \strokec4  \cf8 \strokec8 None\cf0 \strokec4 :\cb1 \
+\cb3         \cf2 \strokec2 return\cf0 \strokec4  \cf7 \strokec7 "Invalid text! Please try again!"\cf0 \cb1 \strokec4 \
+\
+\cb3     anger = response[\cf7 \strokec7 "anger"\cf0 \strokec4 ]\cb1 \
+\cb3     disgust = response[\cf7 \strokec7 "disgust"\cf0 \strokec4 ]\cb1 \
+\cb3     fear = response[\cf7 \strokec7 "fear"\cf0 \strokec4 ]\cb1 \
+\cb3     joy = response[\cf7 \strokec7 "joy"\cf0 \strokec4 ]\cb1 \
+\cb3     sadness = response[\cf7 \strokec7 "sadness"\cf0 \strokec4 ]\cb1 \
+\cb3     dominant_emotion = response[\cf7 \strokec7 "dominant_emotion"\cf0 \strokec4 ]\cb1 \
+\
+\cb3     \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "For the given statement, the system response is "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "'anger': \cf8 \strokec8 \{\cf0 \strokec4 anger\cf8 \strokec8 \}\cf7 \strokec7 , "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "'disgust': \cf8 \strokec8 \{\cf0 \strokec4 disgust\cf8 \strokec8 \}\cf7 \strokec7 , "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "'fear': \cf8 \strokec8 \{\cf0 \strokec4 fear\cf8 \strokec8 \}\cf7 \strokec7 , "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "'joy': \cf8 \strokec8 \{\cf0 \strokec4 joy\cf8 \strokec8 \}\cf7 \strokec7  and "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "'sadness': \cf8 \strokec8 \{\cf0 \strokec4 sadness\cf8 \strokec8 \}\cf7 \strokec7 . "\cf0 \cb1 \strokec4 \
+\cb3         \cf8 \strokec8 f\cf7 \strokec7 "The dominant emotion is \cf8 \strokec8 \{\cf0 \strokec4 dominant_emotion\cf8 \strokec8 \}\cf7 \strokec7 ."\cf0 \cb1 \strokec4 \
+\cb3     )\cb1 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 if\cf0 \strokec4  \cf5 \strokec5 __name__\cf0 \strokec4  == \cf7 \strokec7 "__main__"\cf0 \strokec4 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3     app.run(\cf5 \strokec5 host\cf0 \strokec4 =\cf7 \strokec7 "0.0.0.0"\cf0 \strokec4 , \cf5 \strokec5 port\cf0 \strokec4 =\cf10 \strokec10 5000\cf0 \strokec4 )\cb1 \
+}

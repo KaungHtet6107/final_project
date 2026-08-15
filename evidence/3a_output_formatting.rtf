@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red157\green0\blue210;\red255\green255\blue255;\red0\green0\blue0;
+\red0\green0\blue255;\red101\green76\blue29;\red0\green0\blue109;\red144\green1\blue18;\red19\green118\blue70;
+}
+{\*\expandedcolortbl;;\cssrgb\c68627\c0\c85882;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c0\c100000;\cssrgb\c47451\c36863\c14902;\cssrgb\c0\c6275\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c3529\c52549\c34510;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  requests\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  json\cb1 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf5 \cb3 \strokec5 def\cf0 \strokec4  \cf6 \strokec6 emotion_detector\cf0 \strokec4 (\cf7 \strokec7 text_to_analyze\cf0 \strokec4 ):\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3     url = \cf8 \strokec8 "https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"\cf0 \cb1 \strokec4 \
+\
+\cb3     headers = \{\cb1 \
+\cb3         \cf8 \strokec8 "grpc-metadata-mm-model-id"\cf0 \strokec4 : \cf8 \strokec8 "emotion_aggregated-workflow_lang_en_stock"\cf0 \cb1 \strokec4 \
+\cb3     \}\cb1 \
+\
+\cb3     input_json = \{\cb1 \
+\cb3         \cf8 \strokec8 "raw_document"\cf0 \strokec4 : \{\cb1 \
+\cb3             \cf8 \strokec8 "text"\cf0 \strokec4 : text_to_analyze\cb1 \
+\cb3         \}\cb1 \
+\cb3     \}\cb1 \
+\
+\cb3     response = requests.post(url, \cf7 \strokec7 headers\cf0 \strokec4 =headers, \cf7 \strokec7 json\cf0 \strokec4 =input_json)\cb1 \
+\
+\cb3     response_dict = json.loads(response.text)\cb1 \
+\
+\cb3     emotions = response_dict[\cf8 \strokec8 "emotionPredictions"\cf0 \strokec4 ][\cf9 \strokec9 0\cf0 \strokec4 ][\cf8 \strokec8 "emotion"\cf0 \strokec4 ]\cb1 \
+\
+\cb3     anger_score = emotions[\cf8 \strokec8 "anger"\cf0 \strokec4 ]\cb1 \
+\cb3     disgust_score = emotions[\cf8 \strokec8 "disgust"\cf0 \strokec4 ]\cb1 \
+\cb3     fear_score = emotions[\cf8 \strokec8 "fear"\cf0 \strokec4 ]\cb1 \
+\cb3     joy_score = emotions[\cf8 \strokec8 "joy"\cf0 \strokec4 ]\cb1 \
+\cb3     sadness_score = emotions[\cf8 \strokec8 "sadness"\cf0 \strokec4 ]\cb1 \
+\
+\cb3     emotion_scores = \{\cb1 \
+\cb3         \cf8 \strokec8 "anger"\cf0 \strokec4 : anger_score,\cb1 \
+\cb3         \cf8 \strokec8 "disgust"\cf0 \strokec4 : disgust_score,\cb1 \
+\cb3         \cf8 \strokec8 "fear"\cf0 \strokec4 : fear_score,\cb1 \
+\cb3         \cf8 \strokec8 "joy"\cf0 \strokec4 : joy_score,\cb1 \
+\cb3         \cf8 \strokec8 "sadness"\cf0 \strokec4 : sadness_score\cb1 \
+\cb3     \}\cb1 \
+\
+\cb3     dominant_emotion = \cf6 \strokec6 max\cf0 \strokec4 (emotion_scores, \cf7 \strokec7 key\cf0 \strokec4 =emotion_scores.get)\cb1 \
+\
+\cb3     \cf2 \strokec2 return\cf0 \strokec4  \{\cb1 \
+\cb3         \cf8 \strokec8 "anger"\cf0 \strokec4 : anger_score,\cb1 \
+\cb3         \cf8 \strokec8 "disgust"\cf0 \strokec4 : disgust_score,\cb1 \
+\cb3         \cf8 \strokec8 "fear"\cf0 \strokec4 : fear_score,\cb1 \
+\cb3         \cf8 \strokec8 "joy"\cf0 \strokec4 : joy_score,\cb1 \
+\cb3         \cf8 \strokec8 "sadness"\cf0 \strokec4 : sadness_score,\cb1 \
+\cb3         \cf8 \strokec8 "dominant_emotion"\cf0 \strokec4 : dominant_emotion\cb1 \
+\cb3     \}\cb1 \
+}
