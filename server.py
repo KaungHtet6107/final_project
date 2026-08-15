@@ -11,9 +11,14 @@ def render_index_page():
 
 @app.route("/emotionDetector")
 def emotion_detector_route():
+
     text_to_analyze = request.args.get("textToAnalyze")
 
     response = emotion_detector(text_to_analyze)
+
+    # Handle blank/invalid input
+    if response["dominant_emotion"] is None:
+        return "Invalid text! Please try again!"
 
     anger = response["anger"]
     disgust = response["disgust"]
